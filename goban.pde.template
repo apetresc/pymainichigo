@@ -95,16 +95,21 @@ void draw() {
 
   // Draw the highlighting on the ear reddening move
   // Drawing a cross is complicated :(
-  // hint(ENABLE_STROKE_PURE);
-  // stroke(255,248,170);
-  // line(boardOffsetX+9*gridSize - gridSize/5,
-  //     boardOffsetY+8*gridSize - gridSize/5,
-  //     boardOffsetX+9*gridSize + gridSize/5,
-  //     boardOffsetY+8*gridSize + gridSize/5);
-  // line(boardOffsetX+9*gridSize - gridSize/5,
-  //     boardOffsetY+8*gridSize + gridSize/5,
-  //     boardOffsetX+9*gridSize + gridSize/5,
-  //     boardOffsetY+8*gridSize - gridSize/5);
+  hint(ENABLE_STROKE_PURE);
+  switch (stones[{{last_y}}].charAt({{last_x}})) {
+    case 'O': stroke(blackColour); break;
+    case '#': stroke(whiteColour); break;
+  }
+  //stroke(255,248,170);
+  line(boardOffsetX+{{last_x}}*gridSize - gridSize/5,
+     boardOffsetY+{{last_y}}*gridSize - gridSize/5,
+     boardOffsetX+{{last_x}}*gridSize + gridSize/5,
+     boardOffsetY+{{last_y}}*gridSize + gridSize/5);
+  line(boardOffsetX+{{last_x}}*gridSize - gridSize/5,
+     boardOffsetY+{{last_y}}*gridSize + gridSize/5,
+     boardOffsetX+{{last_x}}*gridSize + gridSize/5,
+     boardOffsetY+{{last_y}}*gridSize - gridSize/5);
+
 
   // Apply grain noise
   grain();

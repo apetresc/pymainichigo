@@ -18,23 +18,28 @@ class ProcessingRenderer(object):
     def _convert_position(board):
         symbols = [' ', '#', 'O']
         r = ''
-        for i in range(len(board)):
+        for i in range(1, len(board)):
             r += '  "'
-            for j in range(len(board[i])):
-                r += symbols[board[i][j]]
-            r += '",'
+            for j in range(1, len(board[i])):
+                r += symbols[board[j][i]]
+            r += '",\n'
         return r.rstrip(',')
 
 
 
-    def save(self, position):
+    def save(self, position, last_move):
+        print("LAST MOVE: %s" % (last_move,))
         with tempfile.TemporaryDirectory() as d:
             os.mkdir('%s/goban' % d)
             with open(os.path.join(d, 'goban', 'goban.pde'), mode='w') as f:
                 f.write(self.template.render(
                     width=self.width,
                     height=self.height,
-                    position=ProcessingRenderer._convert_position(position)))
+                    position=ProcessingRenderer._convert_position(position),
+                    last_x=last_move[0] - 1,
+                    last_y=last_move[1] - 1))
+            with open(os.path.join(d, 'goban', 'goban.pde'), mode='r') as f:
+                print(f.read())
             with Xvfb(width=1024, height=768, colordepth=24) as xvfb:
                 subprocess.call(['processing-java', '--sketch=%s/goban' % d, '--run'])
             shutil.copy(os.path.join(d, 'goban', 'wallpaper.png'), 'wallpaper.png')
