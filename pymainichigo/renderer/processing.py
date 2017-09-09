@@ -4,14 +4,14 @@ import shutil
 import subprocess
 import tempfile
 
-from jinja2 import Environment, FileSystemLoader, Template
+from jinja2 import Environment, PackageLoader, Template
 from xvfbwrapper import Xvfb
 
 
 class ProcessingRenderer(object):
     def __init__(self, config):
         self.width, self.height = config['wallpaper']['width'], config['wallpaper']['height']
-        self.template = Environment(loader=FileSystemLoader(searchpath='./'))\
+        self.template = Environment(loader=PackageLoader('pymainichigo', ''))\
                 .get_template('goban.pde.template')
 
     @staticmethod
@@ -41,5 +41,7 @@ class ProcessingRenderer(object):
             with open(os.path.join(d, 'goban', 'goban.pde'), mode='r') as f:
                 print(f.read())
             with Xvfb(width=1024, height=768, colordepth=24) as xvfb:
-                subprocess.call(['processing-java', '--sketch=%s/goban' % d, '--run'])
-            shutil.copy(os.path.join(d, 'goban', 'wallpaper.png'), 'wallpaper.png')
+                cmd = ['processing-java', '--sketch=%s/goban' % d, '--run']
+                print("Calling %s" % ' '.join(cmd))
+                subprocess.call(cmd)
+            shutil.copy(os.path.join(d, 'goban', 'wallpaper.png'), os.path.expanduser('~/.pymainichigo/wallpaper.png'))
