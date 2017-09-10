@@ -19,7 +19,8 @@ class ProcessingRenderer(object):
     @staticmethod
     def _check_processing__():
         cmd = ['processing-java', '--help']
-        r = subprocess.call(cmd)
+        with open(os.devnull, 'w') as null:
+            r = subprocess.call(cmd, stdout=null, stderr=null)
         if r != 0:
             raise EnvironmentError("Cannot execute processing-java, make sure it is installed!")
 
@@ -35,7 +36,6 @@ class ProcessingRenderer(object):
         return r.rstrip(',')
 
     def save(self, position, last_move):
-        print("LAST MOVE: %s" % (last_move,))
         with tempfile.TemporaryDirectory() as d:
             os.mkdir('%s/goban' % d)
             with open(os.path.join(d, 'goban', 'goban.pde'), mode='w') as f:
@@ -45,10 +45,7 @@ class ProcessingRenderer(object):
                     position=ProcessingRenderer._convert_position(position),
                     last_x=last_move[0] - 1,
                     last_y=last_move[1] - 1))
-            with open(os.path.join(d, 'goban', 'goban.pde'), mode='r') as f:
-                print(f.read())
-            with Xvfb(width=1024, height=768, colordepth=24):
+            with Xvfb(width=1024, height=768, colordepth=24), open(os.devnull, 'w') as null:
                 cmd = ['processing-java', '--sketch=%s/goban' % d, '--run']
-                print("Calling %s" % ' '.join(cmd))
-                subprocess.call(cmd)
+                subprocess.call(cmd, stdout=null, stderr=null)
             shutil.copy(os.path.join(d, 'goban', 'wallpaper.png'), os.path.expanduser(self.output_path))
