@@ -10,10 +10,18 @@ from xvfbwrapper import Xvfb
 
 class ProcessingRenderer(object):
     def __init__(self, config):
+        ProcessingRenderer._check_processing__()
         self.width, self.height = config['wallpaper']['width'], config['wallpaper']['height']
         self.template = Environment(loader=PackageLoader('pymainichigo', ''))\
             .get_template('goban.pde.template')
         self.output_path = config['wallpaper']['output']
+
+    @staticmethod
+    def _check_processing__():
+        cmd = ['processing-java', '--help']
+        r = subprocess.call(cmd)
+        if r != 0:
+            raise EnvironmentError("Cannot execute processing-java, make sure it is installed!")
 
     @staticmethod
     def _convert_position(board):
