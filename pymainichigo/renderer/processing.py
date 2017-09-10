@@ -4,7 +4,7 @@ import shutil
 import subprocess
 import tempfile
 
-from jinja2 import Environment, PackageLoader, Template
+from jinja2 import Environment, PackageLoader
 from xvfbwrapper import Xvfb
 
 
@@ -12,7 +12,8 @@ class ProcessingRenderer(object):
     def __init__(self, config):
         self.width, self.height = config['wallpaper']['width'], config['wallpaper']['height']
         self.template = Environment(loader=PackageLoader('pymainichigo', ''))\
-                .get_template('goban.pde.template')
+            .get_template('goban.pde.template')
+        self.output_path = config['wallpaper']['output']
 
     @staticmethod
     def _convert_position(board):
@@ -24,8 +25,6 @@ class ProcessingRenderer(object):
                 r += symbols[board[j][i]]
             r += '",\n'
         return r.rstrip(',')
-
-
 
     def save(self, position, last_move):
         print("LAST MOVE: %s" % (last_move,))
@@ -40,8 +39,8 @@ class ProcessingRenderer(object):
                     last_y=last_move[1] - 1))
             with open(os.path.join(d, 'goban', 'goban.pde'), mode='r') as f:
                 print(f.read())
-            with Xvfb(width=1024, height=768, colordepth=24) as xvfb:
+            with Xvfb(width=1024, height=768, colordepth=24):
                 cmd = ['processing-java', '--sketch=%s/goban' % d, '--run']
                 print("Calling %s" % ' '.join(cmd))
                 subprocess.call(cmd)
-            shutil.copy(os.path.join(d, 'goban', 'wallpaper.png'), os.path.expanduser('~/.pymainichigo/wallpaper.png'))
+            shutil.copy(os.path.join(d, 'goban', 'wallpaper.png'), os.path.expanduser(self.output_path))
