@@ -38,7 +38,7 @@ int sizeY = {{height}};
 
 // The size of each square of the board
 // Play around to find something that suits you
-int gridSize = min(sizeX, sizeY)/36;
+int gridSize = int(min(sizeX, sizeY)/{{gridSizeQuotient}});
 
 // Center the board
 int boardOffsetX = floor(sizeX/2 - gridSize*9.5);

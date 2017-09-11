@@ -71,7 +71,7 @@ def main():
     sgf = pymainichigo.selector.SGF(sgf_path)
 
     wallpaper_renderer = pymainichigo.renderer.processing.ProcessingRenderer(
-        config=config['render'][0]['processing'],
+        config=config['render'][0]['processing'] or {},
         width=config['wallpaper']['width'],
         height=config['wallpaper']['height'],
         output_path=config['wallpaper']['output'])

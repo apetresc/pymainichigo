@@ -15,6 +15,7 @@ class ProcessingRenderer(object):
         self.template = Environment(loader=PackageLoader('pymainichigo', ''))\
             .get_template('goban.pde.template')
         self.output_path = output_path
+        self.magnification = float(config.get('magnification', 5))
 
     @staticmethod
     def _check_processing__():
@@ -42,6 +43,7 @@ class ProcessingRenderer(object):
                 f.write(self.template.render(
                     width=self.width,
                     height=self.height,
+                    gridSizeQuotient=(40 - self.magnification * 2),
                     position=ProcessingRenderer._convert_position(position),
                     last_x=last_move[0] - 1,
                     last_y=last_move[1] - 1))
