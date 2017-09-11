@@ -1,8 +1,5 @@
-from os import path
 from setuptools import setup, find_packages  # Always prefer setuptools over distutils
 
-
-here = path.abspath(path.dirname(__file__))
 
 setup(
     name='pymainichigo',
@@ -33,15 +30,11 @@ setup(
         'Jinja2==2.9.6'
     ],
 
-    package_data={ 'pymainichigo': ['goban.pde.template', 'test.sgf'] },
+    package_data={'pymainichigo': ['goban.pde.template', 'test.sgf']},
 
-    # To provide executable scripts, use entry points in preference to the
-    # "scripts" keyword. Entry points provide cross-platform support and allow
-    # pip to create the appropriate form of executable for the target platform.
-    #entry_points={ 'console_scripts': [ 'sample=sample:main', ], },
     entry_points={
         "console_scripts": [
             'pymainichigo=pymainichigo.main:main'
-            ]
+        ]
     },
 )
