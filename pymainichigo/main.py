@@ -58,6 +58,10 @@ def main():
                     sgf_selector = pymainichigo.selector.FileSelector(config['sgf'][0][selector_type])
                 elif selector_type == 'dir':
                     sgf_selector = pymainichigo.selector.DirSelector(config['sgf'][0][selector_type])
+                elif selector_type == 'rss':
+                    sgf_selector = pymainichigo.selector.RssSelector(config['sgf'][0][selector_type])
+                elif selector_type == 'gokifu':
+                    sgf_selector = pymainichigo.selector.GoKifuSelector(config['sgf'][0][selector_type])
             except RuntimeError:
                 continue
             break
