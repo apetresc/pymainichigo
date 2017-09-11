@@ -7,7 +7,6 @@ import yaml
 from pymainichigo.desktop import set_wallpaper
 import pymainichigo.renderer.processing
 import pymainichigo.selector
-import pymainichigo.sgf.sgf
 
 
 DEFAULT_CONFIG = yaml.load("""
@@ -69,7 +68,7 @@ def main():
             sgf_selector.write_to_cache(sgf_path)
         else:
             raise RuntimeError("No SGF selector was able to find an SGF")
-    sgf = pymainichigo.sgf.sgf.SGF(sgf_path)
+    sgf = pymainichigo.selector.SGF(sgf_path)
 
     wallpaper_renderer = pymainichigo.renderer.processing.ProcessingRenderer(
         config=config['render'][0]['processing'],
