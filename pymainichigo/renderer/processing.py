@@ -1,5 +1,6 @@
 import os
 import os.path
+import re
 import shutil
 import subprocess
 import tempfile
@@ -16,6 +17,8 @@ class ProcessingRenderer(object):
             .get_template('goban.pde.template')
         self.output_path = output_path
         self.magnification = float(config.get('magnification', 5))
+        self.color = config.get('color', '#826904')
+        assert re.match(r'^#[A-Fa-f0-9]{6}$', self.color), "Invalid color code: %s" % self.color
 
     @staticmethod
     def _check_processing__():
@@ -44,6 +47,7 @@ class ProcessingRenderer(object):
                     width=self.width,
                     height=self.height,
                     gridSizeQuotient=(40 - self.magnification * 2),
+                    color=self.color,
                     position=ProcessingRenderer._convert_position(position),
                     last_x=last_move[0] - 1,
                     last_y=last_move[1] - 1))

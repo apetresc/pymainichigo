@@ -11,14 +11,16 @@ import pymainichigo.selector
 
 DEFAULT_CONFIG = yaml.load("""
 wallpaper:
-    output: ~/.pymainichigo/wallpaper.png
-    width: 1920
-    height: 1080
+  output: "~/.pymainichigo/wallpaper.png"
+  width: 1920
+  height: 1080
 sgf:
 - file:
-    path: {sgf_file_path}
+    path: "{sgf_file_path}"
 render:
 - processing:
+    magnification: 5
+    color: "#826904"
 """.format(sgf_file_path=os.path.join(os.path.dirname(__file__), 'test.sgf')))
 
 

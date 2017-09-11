@@ -51,7 +51,7 @@ String[] stones = {
 };
 
 // This colour dictates the general colour scheme of the board
-color boardColour = color(130, 105, 4);
+color boardColour = {{color}};
 
 // These are the colours for the stones. They are automatically
 // configured to match the current board colour unless you set
