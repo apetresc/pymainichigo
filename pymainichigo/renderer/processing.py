@@ -9,12 +9,12 @@ from xvfbwrapper import Xvfb
 
 
 class ProcessingRenderer(object):
-    def __init__(self, config):
+    def __init__(self, width, height, output_path, config):
         ProcessingRenderer._check_processing__()
-        self.width, self.height = config['wallpaper']['width'], config['wallpaper']['height']
+        self.width, self.height = width, height
         self.template = Environment(loader=PackageLoader('pymainichigo', ''))\
             .get_template('goban.pde.template')
-        self.output_path = config['wallpaper']['output']
+        self.output_path = output_path
 
     @staticmethod
     def _check_processing__():

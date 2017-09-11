@@ -71,7 +71,11 @@ def main():
             raise RuntimeError("No SGF selector was able to find an SGF")
     sgf = pymainichigo.sgf.sgf.SGF(sgf_path)
 
-    wallpaper_renderer = pymainichigo.renderer.processing.ProcessingRenderer(config)
+    wallpaper_renderer = pymainichigo.renderer.processing.ProcessingRenderer(
+        config=config['render'][0]['processing'],
+        width=config['wallpaper']['width'],
+        height=config['wallpaper']['height'],
+        output_path=config['wallpaper']['output'])
     wallpaper_renderer.save(*sgf.get_board(max_move_num=compute_progress(sgf)))
     set_wallpaper(os.path.expanduser(config['wallpaper']['output']))
 
