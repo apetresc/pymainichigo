@@ -7,6 +7,7 @@ import yaml
 from pymainichigo.desktop import set_wallpaper
 import pymainichigo.renderer.processing
 import pymainichigo.selector
+import pymainichigo.sgf.sgf
 
 
 DEFAULT_CONFIG = yaml.load("""
@@ -28,13 +29,15 @@ def create_config(config_dir, config_file):
     if not os.path.exists(config_file):
         with open(config_file, 'w') as f:
             f.write(yaml.dump(DEFAULT_CONFIG, default_flow_style=False))
+    if not os.path.exists(os.path.join(config_dir, 'cache')):
+        os.mkdir(os.path.join(config_dir, 'cache'))
 
 
-def compute_progress(sgf_selector):
+def compute_progress(sgf):
     now = datetime.datetime.now()
     seconds_since_midnight = (now - now.replace(hour=0, minute=0, second=0, microsecond=0)).total_seconds()
     day_progress = seconds_since_midnight / 86400.0
-    sgf_progress = sgf_selector.get_game_length() * day_progress
+    sgf_progress = sgf.get_game_length() * day_progress
     return sgf_progress
 
 
@@ -46,19 +49,26 @@ def main():
     with open(config_file, 'r') as f:
         config = yaml.load(f)
 
-    if os.path.exists(os.path.expanduser('~/pymainichigo/cache/%s.sgf' % datetime.datetime.now().date())):
-        sgf = os.path.expanduser('~/pymainichigo/cache/%s.sgf' % datetime.datetime.now().date())
-    for selector in config['sgf']:
-        selector_type = list(selector.keys())[0]
-        try:
-            if selector_type == 'file':
-                sgf_selector = pymainichigo.selector.FileSelector(config['sgf'][0][selector_type])
-        except RuntimeError:
-            continue
-        break
+    sgf_path = os.path.expanduser('~/.pymainichigo/cache/%s.sgf' % datetime.datetime.now().date())
+    if not os.path.exists(sgf_path):
+        for selector in config['sgf']:
+            selector_type = list(selector.keys())[0]
+            try:
+                if selector_type == 'file':
+                    sgf_selector = pymainichigo.selector.FileSelector(config['sgf'][0][selector_type])
+                elif selector_type == 'dir':
+                    sgf_selector = pymainichigo.selector.DirSelector(config['sgf'][0][selector_type])
+            except RuntimeError:
+                continue
+            break
+        if sgf_selector:
+            sgf_selector.write_to_cache(sgf_path)
+        else:
+            raise RuntimeError("No SGF selector was able to find an SGF")
+    sgf = pymainichigo.sgf.sgf.SGF(sgf_path)
 
     wallpaper_renderer = pymainichigo.renderer.processing.ProcessingRenderer(config)
-    wallpaper_renderer.save(*sgf_selector.get_board(max_move_num=compute_progress(sgf_selector)))
+    wallpaper_renderer.save(*sgf.get_board(max_move_num=compute_progress(sgf)))
     set_wallpaper(os.path.expanduser(config['wallpaper']['output']))
 
 
