@@ -1,4 +1,5 @@
 import datetime
+import math
 import os
 import os.path
 
@@ -14,6 +15,7 @@ wallpaper:
   output: "~/.pymainichigo/wallpaper.png"
   width: 1920
   height: 1080
+curve: linear
 sgf:
 - file:
     path: "{sgf_file_path}"
@@ -34,11 +36,17 @@ def create_config(config_dir, config_file):
         os.mkdir(os.path.join(config_dir, 'cache'))
 
 
-def compute_progress(sgf):
+def compute_progress(sgf, curve):
     now = datetime.datetime.now()
     seconds_since_midnight = (now - now.replace(hour=0, minute=0, second=0, microsecond=0)).total_seconds()
     day_progress = seconds_since_midnight / 86400.0
-    sgf_progress = sgf.get_game_length() * day_progress
+
+    if curve == 'linear':
+        sgf_progress = sgf.get_game_length() * day_progress
+    elif curve == 'sigmoid':
+        sgf_progress = sgf.get_game_length() * (1 / (1 + math.exp(-12 * day_progress + 6)))
+    else:
+        raise RuntimeError("Invalid curve: %s" % curve)
     return sgf_progress
 
 
@@ -77,7 +85,7 @@ def main():
         width=config['wallpaper']['width'],
         height=config['wallpaper']['height'],
         output_path=config['wallpaper']['output'])
-    wallpaper_renderer.save(*sgf.get_board(max_move_num=compute_progress(sgf)))
+    wallpaper_renderer.save(*sgf.get_board(max_move_num=compute_progress(sgf, config.get('curve', 'linear'))))
     set_wallpaper(os.path.expanduser(config['wallpaper']['output']))
 
 
