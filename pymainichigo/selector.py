@@ -5,7 +5,7 @@ import sgf
 from pymainichigo.sgf.gogame import GoGame
 
 
-class SgfSelecter(object):
+class SgfSelector(object):
     def __init__(self, config):
         pass
 
@@ -13,9 +13,9 @@ class SgfSelecter(object):
         pass
 
 
-class FileSelecter(SgfSelecter):
+class FileSelector(SgfSelector):
     def __init__(self, config):
-        super(FileSelecter, self).__init__(config)
+        super(FileSelector, self).__init__(config)
         self.fn = os.path.expanduser(config['path'])
         with open(self.fn, 'r') as f:
             collection = sgf.parse(f.read())

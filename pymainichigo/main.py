@@ -52,7 +52,7 @@ def main():
         selector_type = list(selector.keys())[0]
         try:
             if selector_type == 'file':
-                sgf_selector = pymainichigo.selector.FileSelecter(config['sgf'][0][selector_type])
+                sgf_selector = pymainichigo.selector.FileSelector(config['sgf'][0][selector_type])
         except RuntimeError:
             continue
         break
