@@ -96,6 +96,16 @@ The Processing renderer, adapted from [kqr](http://github.com/kqr)'s [sketch](ht
   - `magnification` – A float between 0 and 10 that controls the size of the Go board in the middle of the wallpaper.
   - `color` – A 6-digit hex color code for the palette to use for the background. The default, `#826904`, exactly matches kqr's original iconic image.
 
-# Contributing
+## Usage
+
+When `pymainichigo` is invoked, it generates the wallpaper according to the current time-of-day. You probably want to re-run it on a schedule so that your wallpaper updates frequently. The easiest way to do this is to just add a line like this to your crontab:
+
+```
+* * * * * DISPLAY=:0 XDG_CURRENT_DESKTOP=i3 pymainichigo
+```
+
+Do not worry about how you set the schedule, it doesn't matter - `pymainichigo` will figure out how far to progress into the SGF file according to the `curve` you set, regardless of how often it is invoked. You just need to invoke it often enough to achieve the granularity you want.
+
+## Contributing
 
 I welcome bug reports and pull requests (_especially_ if they implement a nice Python-only renderer!).
