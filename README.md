@@ -6,9 +6,9 @@ The `processing` renderer is based on [this beautiful image](http://i.solidfiles
 
 ## Screenshots
 
-![](http://apetresc-screenshot.s3.amazonaws.com/2017-09-11-21:40:24.png)
+![](http://apetresc-screenshot.s3.amazonaws.com/2017-09-11-21.40.24.png)
 
-![](http://apetresc-screenshot.s3.amazonaws.com/2017-09-11-21:38:25.png)
+![](http://apetresc-screenshot.s3.amazonaws.com/2017-09-11-21.38.25.png)
 
 ## Dependencies
 
