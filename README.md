@@ -60,7 +60,7 @@ In `linear` mode (the default), the SGF is played out in evenly-spaced intervals
 
 In `sigmoid` mode, the SGF is played out according to the sigmoid curve ![sigmoid](https://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7B1%20&plus;%20e%5E%7B-12x%20&plus;%206%7D%7D). This curve is calibrated so that the moves are played out very slowly prior to 9:00 AM (only ~18%) and after 9:00 PM (the last 5%); the majority of the action takes place during normal working hours.
 <p align="center">
-  <img src="http://apetresc-screenshot.s3.amazonaws.com/2017-09-11-20:48:36.png">
+  <img src="http://apetresc-screenshot.s3.amazonaws.com/2017-09-11-20.48.36.png">
 </p>
 
 ### `sgf`
