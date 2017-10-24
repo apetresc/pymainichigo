@@ -3,7 +3,7 @@ from setuptools import setup, find_packages  # Always prefer setuptools over dis
 
 setup(
     name='pymainichigo',
-    version='1.0.1',
+    version='1.0.2',
 
     description='Wallpaper generator for Go/Baduk/Weiqi positions',
     long_description='Generates and sets your wallpaper to a daily Go game, ' +

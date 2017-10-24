@@ -1,3 +1,4 @@
+import glob
 import os
 import os.path
 import re
@@ -55,3 +56,4 @@ class ProcessingRenderer(object):
                 cmd = ['processing-java', '--sketch=%s/goban' % d, '--run']
                 subprocess.call(cmd, stdout=null, stderr=null)
             shutil.copy(os.path.join(d, 'goban', 'wallpaper.png'), os.path.expanduser(self.output_path))
+        list(map(shutil.rmtree, glob.glob(os.path.join(tempfile.gettempdir(), 'goban*temp'))))
