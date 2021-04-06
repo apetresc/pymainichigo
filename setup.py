@@ -25,7 +25,7 @@ setup(
 
     install_requires=[
         'sgf==0.5',
-        'pyyaml==3.12',
+        'pyyaml==5.4',
         'xvfbwrapper==0.2.9',
         'Jinja2==2.11.3',
         'feedparser==5.2.1',
