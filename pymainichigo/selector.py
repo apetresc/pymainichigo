@@ -6,7 +6,7 @@ import feedparser
 import requests
 import sgf
 
-from pymainichigo.sgf.gogame import GoGame
+from pymainichigo.gogame import GoGame
 
 
 class SgfSelector(object):
@@ -18,7 +18,7 @@ class SgfSelector(object):
             f.write(self.get_sgf())
 
     def get_sgf(self):
-        raise NotImplemented
+        raise NotImplementedError
 
 
 class FileSelector(SgfSelector):

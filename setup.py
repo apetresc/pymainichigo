@@ -3,7 +3,7 @@ from setuptools import setup, find_packages  # Always prefer setuptools over dis
 
 setup(
     name='pymainichigo',
-    version='1.0.2',
+    version='1.1.0',
 
     description='Wallpaper generator for Go/Baduk/Weiqi positions',
     long_description='Generates and sets your wallpaper to a daily Go game, ' +
@@ -12,7 +12,7 @@ setup(
     url='https://github.com/apetresc/pymainichigo',
 
     author='Adrian Petrescu',
-    author_email='apetresc@gmail.com',
+    author_email='adrian@apetre.sc',
 
     license='GPL',
 
@@ -28,8 +28,9 @@ setup(
         'pyyaml==5.4',
         'xvfbwrapper==0.2.9',
         'Jinja2==2.11.3',
-        'feedparser==5.2.1',
-        'requests==2.20.0'
+        'feedparser==6.0.10',
+        'requests==2.20.0',
+        'Pillow==9.4.0'
     ],
 
     package_data={'pymainichigo': ['goban.pde.template', 'test.sgf']},

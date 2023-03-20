@@ -19,7 +19,7 @@ class ProcessingRenderer(object):
         self.output_path = output_path
         self.magnification = float(config.get('magnification', 5))
         self.color = config.get('color', '#826904')
-        assert re.match(r'^#[A-Fa-f0-9]{6}$', self.color), "Invalid color code: %s" % self.color
+        assert re.match(r'^#[A-Fa-f0-9]{6}$', self.color), f"Invalid color code: {self.color}"
 
     @staticmethod
     def _check_processing__():
@@ -53,7 +53,7 @@ class ProcessingRenderer(object):
                     last_x=last_move[0] - 1,
                     last_y=last_move[1] - 1))
             with Xvfb(width=1024, height=768, colordepth=24), open(os.devnull, 'w') as null:
-                cmd = ['processing-java', '--sketch=%s/goban' % d, '--run']
+                cmd = ['processing-java', f'--sketch={d}/goban', '--run']
                 subprocess.call(cmd, stdout=null, stderr=null)
             shutil.copy(os.path.join(d, 'goban', 'wallpaper.png'), os.path.expanduser(self.output_path))
         list(map(shutil.rmtree, glob.glob(os.path.join(tempfile.gettempdir(), 'goban*temp'))))
