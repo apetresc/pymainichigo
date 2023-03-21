@@ -24,7 +24,7 @@ render:
     color: "#826904"
 sys:
   set_wallpaper: false
-""")
+""", Loader=yaml.SafeLoader)
 DEFAULT_CONFIG["sgf"]["file"]["path"] = os.path.join(os.path.dirname(__file__), 'test.sgf')
 
 
@@ -58,7 +58,7 @@ def main():
     create_config(config_dir, config_file)
 
     with open(config_file, 'r', encoding='utf8') as f:
-        config = yaml.load(f)
+        config = yaml.load(f, Loader=yaml.SafeLoader)
 
     sgf_path = os.path.expanduser(f"~/.pymainichigo/cache/{datetime.datetime.now().date()}.sgf")
     if not os.path.exists(sgf_path):
