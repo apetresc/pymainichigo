@@ -92,17 +92,18 @@ class PillowRenderer(object):
                                 fill=self.black_color)
 
         # Highlight the most recent move
-        highlight_color = self.white_color if position[last_move[1] + 1][last_move[0] + 1] == 1 else self.black_color
-        draw.line([(self.board_offset_x + last_move[1] * self.grid_size - self.grid_size / 5,
-                    self.board_offset_y + last_move[0] * self.grid_size - self.grid_size / 5),
-                (self.board_offset_x + last_move[1] * self.grid_size + self.grid_size / 5,
-                    self.board_offset_y + last_move[0] * self.grid_size + self.grid_size / 5)],
+        highlight_color = self.white_color if position[last_move[0]][last_move[1]] == 1 else self.black_color
+        last_move = (last_move[0] - 1, last_move[1] - 1)
+        draw.line([(self.board_offset_x + last_move[0] * self.grid_size - self.grid_size / 5,
+                    self.board_offset_y + last_move[1] * self.grid_size - self.grid_size / 5),
+                (self.board_offset_x + last_move[0] * self.grid_size + self.grid_size / 5,
+                    self.board_offset_y + last_move[1] * self.grid_size + self.grid_size / 5)],
                 fill=highlight_color,
                 width=2)
-        draw.line([(self.board_offset_x + last_move[1] * self.grid_size - self.grid_size / 5,
-                    self.board_offset_y + last_move[0] * self.grid_size + self.grid_size / 5),
-                (self.board_offset_x + last_move[1] * self.grid_size + self.grid_size / 5,
-                    self.board_offset_y + last_move[0] * self.grid_size - self.grid_size / 5)],
+        draw.line([(self.board_offset_x + last_move[0] * self.grid_size - self.grid_size / 5,
+                    self.board_offset_y + last_move[1] * self.grid_size + self.grid_size / 5),
+                (self.board_offset_x + last_move[0] * self.grid_size + self.grid_size / 5,
+                    self.board_offset_y + last_move[1] * self.grid_size - self.grid_size / 5)],
                 fill=highlight_color,
                 width=2)
 
