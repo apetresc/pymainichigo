@@ -29,7 +29,7 @@ setup(
         'xvfbwrapper==0.2.9',
         'Jinja2==2.11.3',
         'feedparser==5.2.1',
-        'requests==2.20.0'
+        'requests==2.31.0'
     ],
 
     package_data={'pymainichigo': ['goban.pde.template', 'test.sgf']},
