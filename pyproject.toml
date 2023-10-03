@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "pymainichigo"
+version = "1.1.0"
+description = "Wallpaper generator for Go/Baduk/Weiqi positions"
+authors = ["Adrian Petrescu <adrian@apetre.sc>"]
+license = "GPL"
+readme = "README.md"
+include = ["pymainichigo/goban.pde.template", "pymainichigo/test.sgf"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+sgf = "0.5"
+pyyaml = "6.0.1"
+xvfbwrapper = "0.2.9"
+jinja2 = "2.11.3"
+feedparser = "6.0.10"
+requests = "2.20.0"
+
+[tool.poetry.scripts]
+pymainichigo = 'pymainichigo.main:main'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
